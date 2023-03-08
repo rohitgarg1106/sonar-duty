@@ -1,6 +1,7 @@
 package com.example.sonarduty.model;
 
 import com.example.sonarduty.enums.ItemStatus;
+import com.example.sonarduty.request.ItemCreateRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -69,4 +70,20 @@ public class Item {
     @Column(name = "purchased_timestamp", insertable = false, updatable = false)
     private LocalDateTime purchasedTimestamp;
 
+    public Item(ItemCreateRequest request) {
+        this.itemCode = request.getItemCode();
+        this.name = request.getName();
+        this.description = request.getDescription();
+        this.itemTypeId = request.getItemTypeId();
+        this.info = request.getInfo();
+        this.location = request.getLocation();
+        this.cost = request.getCost();
+        if(request.getStatus() == null){
+            this.status = ItemStatus.AVAILABLE;
+        }
+        else{
+            this.status = ItemStatus.getStatusEnum(request.getStatus());
+        }
+        this.purchasedTimestamp = LocalDateTime.parse(request.getPurchasedTimestamp());
+    }
 }

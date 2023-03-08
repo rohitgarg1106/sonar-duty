@@ -21,6 +21,7 @@ CREATE TABLE `items` (
 
 CREATE TABLE `sonar`.`item_change_logs` (
                                             `id` bigint NOT NULL AUTO_INCREMENT,
+                                            `item_id` bigint DEFAULT NULL,
                                             `item_code` varchar(500) DEFAULT NULL,
                                             `item_name` varchar(500) DEFAULT NULL,
                                             `description` varchar(500) DEFAULT NULL,

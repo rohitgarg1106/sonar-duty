@@ -29,7 +29,7 @@ public enum ItemStatus {
         return status;
     }
 
-    public ItemStatus getStatusEnum(String status) {
+    public static ItemStatus getStatusEnum(String status) {
         return cache.get(status);
     }
 

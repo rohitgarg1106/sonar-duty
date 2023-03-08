@@ -1,5 +1,6 @@
 package com.example.sonarduty.model;
 
+import com.example.sonarduty.enums.ItemStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,6 +22,9 @@ public class ItemChangeLog {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "item_id")
+    private Long itemId;
+
     @Column(name = "item_code")
     private String itemCode;
 
@@ -38,6 +42,9 @@ public class ItemChangeLog {
 
     @Column(name = "cost")
     private Long cost;
+
+    @Enumerated(EnumType.STRING)
+    private ItemStatus status;
 
     @Basic(optional = false)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
