@@ -1,5 +1,6 @@
 package com.example.sonarduty.model;
 
+import com.example.sonarduty.request.CreateUserRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -43,6 +44,7 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "updated_timestamp", insertable = false, updatable = false)
     private LocalDateTime updatedTimestamp;
+
 
 
 }

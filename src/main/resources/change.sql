@@ -2,7 +2,7 @@
 
 -- items
 CREATE TABLE `items` (
-                         `id` bigint NOT NULL,
+                         `id` bigint NOT NULL AUTO_INCREMENT,
                          `item_code` varchar(500) DEFAULT NULL,
                          `item_name` varchar(500) DEFAULT NULL,
                          `description` varchar(500) DEFAULT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE `items` (
 -- item change log
 
 CREATE TABLE `sonar`.`item_change_logs` (
-                                            `id` bigint NOT NULL,
+                                            `id` bigint NOT NULL AUTO_INCREMENT,
                                             `item_code` varchar(500) DEFAULT NULL,
                                             `item_name` varchar(500) DEFAULT NULL,
                                             `description` varchar(500) DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `sonar`.`item_change_logs` (
 
 
 CREATE TABLE `sonar`.`item_types` (
-                                      `id` bigint NOT NULL,
+                                      `id` bigint NOT NULL AUTO_INCREMENT,
                                       `name` varchar(500) DEFAULT NULL,
                                       `description` varchar(500) DEFAULT NULL,
                                       `info` text,
@@ -49,7 +49,7 @@ CREATE TABLE `sonar`.`item_types` (
 -- user
 
 CREATE TABLE `sonar`.`users` (
-                                 `id` bigint NOT NULL,
+                                 `id` bigint NOT NULL AUTO_INCREMENT,
                                  `name` varchar(500) DEFAULT NULL,
                                  `email` varchar(500) DEFAULT NULL,
                                  `phone_number` BIGINT DEFAULT NULL,
