@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.sonarduty.utils.CommonUtils.isStringEmpty;
 
@@ -52,6 +53,12 @@ public class UserService {
         if(isStringEmpty(request.getEmail())){
             throw new BadRequestException("User email id can not be empty");
         }
+
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        if(user.isPresent() && user.get().getEmail().equalsIgnoreCase(request.getEmail())){
+            throw new BadRequestException("User with same email already exists");
+        }
+
 
     }
 

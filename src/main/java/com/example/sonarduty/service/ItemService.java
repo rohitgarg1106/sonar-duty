@@ -4,10 +4,13 @@ import com.example.sonarduty.enums.ItemStatus;
 import com.example.sonarduty.exception.BadRequestException;
 import com.example.sonarduty.model.Item;
 import com.example.sonarduty.model.ItemChangeLog;
+import com.example.sonarduty.model.ItemType;
 import com.example.sonarduty.repository.ItemChangeLogRepository;
 import com.example.sonarduty.repository.ItemRepository;
+import com.example.sonarduty.repository.ItemTypeRepository;
 import com.example.sonarduty.request.ItemCreateRequest;
 import com.example.sonarduty.request.ItemUpdateRequest;
+import com.example.sonarduty.response.ItemConfigsReponse;
 import com.example.sonarduty.response.ItemCreateResponse;
 import com.example.sonarduty.response.ItemUpdateResponse;
 import com.example.sonarduty.utils.CommonUtils;
@@ -16,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,6 +30,9 @@ public class ItemService {
 
     @Autowired
     public ItemRepository itemRepository;
+
+    @Autowired
+    public ItemTypeRepository itemTypeRepository;
 
     @Autowired
     public ItemChangeLogRepository itemChangeLogRepository;
@@ -59,8 +68,9 @@ public class ItemService {
         return itemRepository.findById(id).orElseThrow(() -> new BadRequestException("Item with given id does not exists"));
     }
 
-    public List<Item> getAllItems(String field) {
-        return itemRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+    public List<Item> getAllItems() {
+//        return itemRepository.findAll(Sort.by(Sort.Direction.DESC, field));
+        return itemRepository.findAll();
     }
 
     public ItemUpdateResponse updateItem(ItemUpdateRequest request) {
@@ -103,5 +113,14 @@ public class ItemService {
         itemChangeLog.setDescription(item.getDescription());
         itemChangeLog.setStatus(item.getStatus());
         itemChangeLogRepository.saveAndFlush(itemChangeLog);
+    }
+
+    public ItemConfigsReponse getConfigs() {
+        List<ItemType> itemTypeList = itemTypeRepository.findAll(Sort.by(Sort.Direction.DESC,"name"));
+        List<Map<String,Long>> itemMapList = itemTypeList.stream().map(i -> Collections.singletonMap(i.getName(), i.getId())).collect(Collectors.toList());
+        return ItemConfigsReponse.builder()
+                .itemTypeList(itemMapList)
+                .statusList(ItemStatus.getAllStatusValues())
+                .build();
     }
 }

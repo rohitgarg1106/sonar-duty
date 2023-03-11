@@ -2,7 +2,9 @@ package com.example.sonarduty.enums;
 
 import lombok.var;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public enum ItemStatus {
@@ -31,6 +33,10 @@ public enum ItemStatus {
 
     public static ItemStatus getStatusEnum(String status) {
         return cache.get(status);
+    }
+
+    public static List<String> getAllStatusValues(){
+        return new ArrayList<>(cache.keySet());
     }
 
     @Override

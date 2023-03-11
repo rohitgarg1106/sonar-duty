@@ -28,7 +28,7 @@ public class ItemCreateRequest {
     @JsonProperty(value = "description")
     private String description;
 
-    @JsonProperty(value = "item_type_id")
+    @JsonProperty(value = "item_type")
     private Long itemTypeId;
 
     @JsonProperty(value = "info")

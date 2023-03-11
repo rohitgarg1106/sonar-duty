@@ -2,6 +2,7 @@ package com.example.sonarduty.model;
 
 import com.example.sonarduty.enums.ItemStatus;
 import com.example.sonarduty.request.ItemCreateRequest;
+import com.example.sonarduty.utils.CommonUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -20,6 +21,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "items")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -84,6 +87,10 @@ public class Item {
         else{
             this.status = ItemStatus.getStatusEnum(request.getStatus());
         }
-        this.purchasedTimestamp = LocalDateTime.parse(request.getPurchasedTimestamp());
+
+        if(!CommonUtils.isStringEmpty(request.getPurchasedTimestamp())){
+            this.purchasedTimestamp = LocalDateTime.parse(request.getPurchasedTimestamp());
+        }
+
     }
 }

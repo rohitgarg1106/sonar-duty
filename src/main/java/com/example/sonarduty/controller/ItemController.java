@@ -5,10 +5,7 @@ import com.example.sonarduty.request.ItemCreateRequest;
 import com.example.sonarduty.request.ItemTypeCreateRequest;
 import com.example.sonarduty.request.ItemTypeUpdateRequest;
 import com.example.sonarduty.request.ItemUpdateRequest;
-import com.example.sonarduty.response.ItemCreateResponse;
-import com.example.sonarduty.response.ItemTypeCreateResponse;
-import com.example.sonarduty.response.ItemTypeUpdateResponse;
-import com.example.sonarduty.response.ItemUpdateResponse;
+import com.example.sonarduty.response.*;
 import com.example.sonarduty.service.ItemService;
 import com.example.sonarduty.service.ItemTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +71,11 @@ public class ItemController {
         }
     }
 
-    @GetMapping(value = "/fetchAll/{field}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllItems(@PathVariable("field") String field){
+    @GetMapping(value = "/fetchAll",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllItems(){
         try{
-            return new ResponseEntity(itemService.getAllItems(field), HttpStatus.OK);
+//            @PathVariable("field") String field
+            return new ResponseEntity(itemService.getAllItems(), HttpStatus.OK);
         }
         catch (BadRequestException badRequestException){
             return new ResponseEntity(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
@@ -85,6 +83,22 @@ public class ItemController {
         catch (Exception exception){
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping(value = "/configs", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getConfigs(){
+        ItemConfigsReponse itemConfigsReponse;
+        HttpStatus httpStatus;
+        try {
+            itemConfigsReponse = itemService.getConfigs();
+            httpStatus = HttpStatus.OK;
+        }
+        catch (Exception exception){
+            itemConfigsReponse = ItemConfigsReponse.failureResponse(exception.getStackTrace().toString());
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity(itemConfigsReponse, httpStatus);
     }
 
 }
